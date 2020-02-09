@@ -1,0 +1,101 @@
+#:kivy 1.0
+
+<MenuBtn@Button>:
+    bold: True
+    color: 0.81, 0.81, 0.81, 1
+    size_hint_min: 50, 30
+
+<ContainersLayout>:
+    id: instance_layout
+    spacing: 10
+    padding: 10, 0
+
+<Container>:
+    orientation: 'horizontal'
+    image_path: self.image_path
+    bg_color: self.bg_color
+    size_hint_max: self.s_hint_max
+    size_hint_min: self.s_hint_min
+    on_touch_down: self.something()
+    canvas.before:
+        Color:
+            rgba: root.bg_color
+        Rectangle:
+            pos: self.pos
+            size: root.size
+    AnchorLayout:
+        size_hint_x: .3
+        anchor_x: 'center'
+        anchor_y: 'center'
+        Image:
+            id: menu_docker_logo
+            size_hint: .8, .8
+            source: root.image_path
+    GridLayout:
+        rows: 3
+        cols: 3
+        Label:
+            text: root.container_tag
+
+<DockerWorkspace>:
+    id: global_layout
+    spacing: 10
+    orientation: 'horizontal'
+    BoxLayout:
+        id: menu_layout
+        spacing: 4
+        padding: 0, 4
+        orientation: 'vertical'
+        size_hint: .2, 1
+        size_hint_min: 100, 100
+        canvas.before:
+            Color:
+                rgba: .23, .23, .23, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            id: menu_btn_layout
+            spacing: 4
+            size_hint_y: .4
+            orientation: 'vertical'
+            MenuBtn:
+                text: 'IMAGES'
+            MenuBtn:
+                text: 'CONTAINERS'
+            MenuBtn:
+                text: 'DOCKER-COMPOSE'
+            MenuBtn:
+                text: 'SETTINGS'
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Image:
+                id: menu_docker_logo
+                size_hint: .8, .8
+                source: 'images/docker_logo.png'
+    BoxLayout:
+        id: workspace_layout
+        orientation: 'vertical'
+        size_hint_x: .7
+        spacing: 10
+        BoxLayout:
+            id: filters_layout
+            orientation: 'horizontal'
+            size_hint_y: 0.05
+            TextInput:
+                id: search
+                multiline: False
+                size_hint_x: 0.3
+                halign: 'left'
+                display_border: 0
+                border: 1, 1, 1, 1
+                background_color: 0.23, 0.23, 0.23, 1
+                foreground_color: 0.81, 0.81, 0.81, 1
+                hint_text: "search"
+            Label:
+                id: filters
+                size_hint_x: 0.7
+                text: "filters"
+        ContainersLayout:
+            id: containers_layout
