@@ -15,6 +15,27 @@ class ContainersLayout(DynamicColsGridLayout):
     min_columns = NumericProperty(1)
     max_columns = NumericProperty(7)
 
+    def __init__(self, **kwargs):
+        super(ContainersLayout, self).__init__(**kwargs)
+        images = DockerClient.conn.images.list()
+        for image in images:
+            if (len(image.tags) > 0):
+                text = image.tags[0]
+                if not (text.find('/') == -1):
+                    names_list = text.split('/')
+                    if len(names_list) > 2:
+                        image_name = names_list[-1]
+                    else:
+                        image_name = names_list[1]
+
+                    name, tag = image_name.split(':')
+                    text = name
+            else:
+                text = "Nobody"
+            container = StoppedContainer(container_tag=text)
+            self.add_widget(container)
+        
+
 
 class StoppedContainer(Container):
     image_path = StringProperty('')
