@@ -16,7 +16,7 @@
     bg_color: self.bg_color
     size_hint_max: self.s_hint_max
     size_hint_min: self.s_hint_min
-    on_touch_down: self.something()
+    # on_touch_down: self.something()
     canvas.before:
         Color:
             rgba: root.bg_color
@@ -97,5 +97,9 @@
                 id: filters
                 size_hint_x: 0.7
                 text: "filters"
-        ContainersLayout:
-            id: containers_layout
+        ScrollView:
+            do_scroll_y: True
+            ContainersLayout:
+                size_hint_y: None
+                id: containers_layout
+                height: self.minimum_height
