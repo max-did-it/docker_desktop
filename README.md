@@ -1,7 +1,7 @@
 # **Docker desktop**
 
 **This is Docker GUI**
-
+![preview.png](https://github.com/max-did-it/docker_desktop/blob/master/preview.png?raw=true)
 ## **TO DO**
 * [-] Control yours containers
 * [-] Create containers from Images
