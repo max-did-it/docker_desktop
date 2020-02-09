@@ -9,7 +9,7 @@ class Container(BoxLayout):
     def __init__(self, container_tag='', **kwargs):
         self.image_path = 'images/stop_container.png'
         self.container_tag = container_tag
-        self.bg_color = (0.81, 0.81, 0.81, 1)
+        self.bg_color = (0.27, 0.27, 0.27, 1)
         super(Container, self).__init__(**kwargs)
 
     def something(self):
