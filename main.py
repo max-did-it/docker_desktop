@@ -1,10 +1,8 @@
 import docker
+
 from kivy.app import App
-from kivy.properties import (NumericProperty, Property, ReferenceListProperty,
-                             StringProperty)
+from kivy.properties import (NumericProperty, StringProperty)
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.gridlayout import GridLayout
 
 from classes.container import Container
 from classes.dynamic_cols_grid_layout import DynamicColsGridLayout
@@ -28,13 +26,12 @@ class ContainersLayout(DynamicColsGridLayout):
                     else:
                         image_name = names_list[1]
 
-                    name, tag = image_name.split(':')
+                    name, _ = image_name.split(':')
                     text = name
             else:
                 text = "Nobody"
             container = StoppedContainer(container_tag=text)
             self.add_widget(container)
-        
 
 
 class StoppedContainer(Container):
@@ -53,8 +50,10 @@ class DockerDesktopApp(App):
     def build(self):
         return DockerWorkspace()
 
+
 class DockerClient:
     conn = docker.from_env()
+
 
 if __name__ == "__main__":
     DockerDesktopApp().run()
