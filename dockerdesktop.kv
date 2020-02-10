@@ -1,14 +1,18 @@
 #:kivy 1.0
 
-<MenuBtn@Button>:
-    bold: True
-    color: 0.81, 0.81, 0.81, 1
-    size_hint_min: 50, 30
-
 <ContainersLayout>:
     id: instance_layout
     spacing: 10
     padding: 10, 0
+    size_hint_y: None
+    id: containers_layout
+    height: self.minimum_height
+
+<MenuButton>:
+    group: 'menu'
+    bold: True
+    color: (0.81, 0.81, 0.81, 1)
+    size_hint_min: (50, 30)
 
 <Container>:
     orientation: 'horizontal'
@@ -37,6 +41,38 @@
         Label:
             text: root.container_tag
 
+<ContainersWorkspace@ScrollView>:
+    id: container_workspace
+    do_scroll_y: True
+    ContainersLayout
+
+<ImageWorkspace@ScrollView>:
+    id: container_workspace
+    do_scroll_y: True
+    ContainersLayout
+
+<SettingsWorkspace@BoxLayout>
+
+<DockerComposesWorkspace@BoxLayout>
+
+<ContainerScreen>:
+    ContainersWorkspace
+
+<ImageScreen>:
+    ImageWorkspace
+
+<SettingScreen>:
+    SettingsWorkspace
+
+<ComposeScreen>:
+    DockerComposesWorkspace
+
+<WorkspaceManager>:
+    ImageScreen
+    ContainerScreen
+    SettingScreen
+    ComposeScreen
+
 <DockerWorkspace>:
     id: global_layout
     spacing: 10
@@ -59,14 +95,23 @@
             spacing: 4
             size_hint_y: .4
             orientation: 'vertical'
-            MenuBtn:
+            MenuButton:
+                id: menu_images_btn
                 text: 'IMAGES'
-            MenuBtn:
+                state: 'down'
+                on_state: self.select_workspace(root)
+            MenuButton:
+                id: menu_containers_btn
                 text: 'CONTAINERS'
-            MenuBtn:
-                text: 'DOCKER-COMPOSE'
-            MenuBtn:
+                on_state: self.select_workspace(root)
+            MenuButton:
+                id: menu_composes_btn
+                text: 'DOCKER-COMPOSES'
+                on_state: self.select_workspace(root)
+            MenuButton:
+                id: menu_settings_btn
                 text: 'SETTINGS'
+                on_state: self.select_workspace(root)
         AnchorLayout:
             anchor_x: 'center'
             anchor_y: 'center'
@@ -97,9 +142,5 @@
                 id: filters
                 size_hint_x: 0.7
                 text: "filters"
-        ScrollView:
-            do_scroll_y: True
-            ContainersLayout:
-                size_hint_y: None
-                id: containers_layout
-                height: self.minimum_height
+        WorkspaceManager:
+            id: workspace_manager
