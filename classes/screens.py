@@ -1,9 +1,9 @@
-from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
+from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 
 
 class WorkspaceManager(ScreenManager):
     def __init__(self, **kwargs):
-        self.transition = SwapTransition()
+        kwargs['transition'] = NoTransition()
         super(WorkspaceManager, self).__init__(**kwargs)
 
 
