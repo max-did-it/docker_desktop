@@ -1,0 +1,9 @@
+#:kivy 1.0
+#:import MenuButton classes.buttons
+
+<MenuButton>:
+    group: 'menu'
+    bold: True
+    color: (0.81, 0.81, 0.81, 1)
+    size_hint_min: (50, 30)
+    on_state: self.select_workspace(app)
