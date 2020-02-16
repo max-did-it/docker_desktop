@@ -22,6 +22,8 @@
 <DockerComposesWorkspace@ScrollView>
 
 <ContainerScreen>:
+    on_enter: self.start_events(app)
+    on_leave: self.pause_events(app)
     ContainersWorkspace
 
 <ImageScreen>:

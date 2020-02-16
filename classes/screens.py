@@ -18,6 +18,11 @@ class ContainerScreen(Screen):
         self.name = 'CONTAINERS'
         super(ContainerScreen, self).__init__(**kwargs)
 
+    def pause_events(self, app):
+        self.children[0].children[0].pause_events()
+
+    def start_events(self, app):
+        self.children[0].children[0].start_events()
 
 class SettingScreen(Screen):
     def __init__(self, **kwargs):

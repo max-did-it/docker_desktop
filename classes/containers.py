@@ -9,6 +9,15 @@ class ContainersLayout(DynamicColsGridLayout):
     cols = 7
     min_columns = NumericProperty(1)
     max_columns = NumericProperty(7)
+    def pause_events(self, *args):
+        for i in self.children:
+            if hasattr(i, 'update_event'):
+                i.update_event()
+
+    def start_events(self, *args):
+        for i in self.children:
+            if hasattr(i, 'update_event'):
+                i.update_event.cancel()
 
     def __init__(self, **kwargs):
         super(ContainersLayout, self).__init__(**kwargs)
@@ -30,6 +39,7 @@ class ContainerBlock(BaseBlock):
         self.label_name = self.container.name
         self.set_image_path()
         self.update_event = Clock.schedule_interval(self.update_container, 1/30)
+        self.update_event.cancel()
         super(ContainerBlock, self).__init__(**kwargs)
 
     def update_container(self, *args, **kwargs):
