@@ -1,7 +1,8 @@
-from kivy.properties import (NumericProperty, StringProperty)
-from .dynamic_cols_grid_layout import DynamicColsGridLayout
-from .docker_client import DockerClient
+from kivy.properties import NumericProperty, StringProperty
+
 from .base_blocks import BaseBlock
+from .docker_client import DockerClient
+from .dynamic_cols_grid_layout import DynamicColsGridLayout
 
 
 class ImagesLayout(DynamicColsGridLayout):
@@ -13,9 +14,9 @@ class ImagesLayout(DynamicColsGridLayout):
         super(ImagesLayout, self).__init__(**kwargs)
         images = DockerClient.conn.images.list()
         for image in images:
-            if (len(image.tags) > 0):
+            if len(image.tags) > 0:
                 text = image.tags[0]
-                if not (text.find('/') == -1):
+                if not text.find('/') == -1:
                     names_list = text.split('/')
                     if len(names_list) > 2:
                         image_name = names_list[-1]
