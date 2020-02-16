@@ -6,6 +6,7 @@ from .dynamic_cols_grid_layout import DynamicColsGridLayout
 
 
 class ImagesLayout(DynamicColsGridLayout):
+    """Layout for group and rule ImageBlock"""
     cols = 7
     min_columns = NumericProperty(1)
     max_columns = NumericProperty(7)
@@ -32,4 +33,8 @@ class ImagesLayout(DynamicColsGridLayout):
 
 
 class ImageBlock(BaseBlock):
+    """This is a class for ui Docker Image enitity.
+     Contains base information about image like:
+     name, tag, owner and others
+    """
     image_path = StringProperty('images/image.png')

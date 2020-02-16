@@ -3,6 +3,11 @@ from kivy.properties import NumericProperty, ReferenceListProperty
 
 
 class BaseBlock(BoxLayout):
+    """This is a class for base ui Blocks
+    Base settings do this class like rectangle block
+    Kv contains image block and label for more information
+    about object.
+    """
     max_x = NumericProperty(200)
     max_y = NumericProperty(100)
     min_x = NumericProperty(int(200*0.7))
