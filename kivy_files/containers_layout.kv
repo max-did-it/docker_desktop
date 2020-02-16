@@ -1,0 +1,16 @@
+#:kivy 1.0
+#:import ContainersLayout classes.containers
+
+<ContainersLayout>:
+    id: instance_layout
+    spacing: 10
+    padding: 10, 0
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: root.size
+    size_hint_y: None
+    id: containers_layout
+    height: self.minimum_height

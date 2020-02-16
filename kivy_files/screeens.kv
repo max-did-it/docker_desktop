@@ -1,0 +1,34 @@
+#:kivy 1.0
+#:import WorkspaceManager classes.screens
+#:import ContainersLayout classes.containers
+#:import ImagesLayout classes.images
+#:import ImageScreen classes.screens
+#:import ContainerScreen classes.screens
+#:import SettingScreen  classes.screens
+#:import ComposeScreen  classes.screens
+
+<ContainersWorkspace@ScrollView>:
+    id: container_workspace
+    do_scroll_y: True
+    ContainersLayout
+
+<ImageWorkspace@ScrollView>:
+    id: container_workspace
+    do_scroll_y: True
+    ImagesLayout
+
+<SettingsWorkspace@ScrollView>
+
+<DockerComposesWorkspace@ScrollView>
+
+<ContainerScreen>:
+    ContainersWorkspace
+
+<ImageScreen>:
+    ImageWorkspace
+
+<SettingScreen>:
+    SettingsWorkspace
+
+<ComposeScreen>:
+    DockerComposesWorkspace

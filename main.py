@@ -1,16 +1,16 @@
+import os
 from kivy.app import App
-from kivy.properties import (NumericProperty, StringProperty)
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
-import classes.buttons
-import classes.containers
-from classes.screens import (WorkspaceManager, SettingScreen, ImageScreen,
-                             ComposeScreen, ContainerScreen)
+from kivy.lang import Builder
 
+
+kivy_dir = 'kivy_files/'
+kvs = list(map(lambda el: kivy_dir + el, os.listdir(kivy_dir)))
+for kv in kvs:
+    Builder.load_file(kv)
 
 class DockerWorkspace(BoxLayout):
     pass
-
 
 class DockerDesktopApp(App):
     def build(self):
