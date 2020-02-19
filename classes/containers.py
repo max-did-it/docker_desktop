@@ -55,13 +55,13 @@ class ContainerBlock(BaseBlock):
         self.docker_conn = docker_conn
         self.container = container
         self.label_name = self.container.name
-        self.set_image_path()
-        self.update_event = Clock.schedule_interval(self._update_container, 1/30)
+        self.__set_image_path()
+        self.update_event = Clock.schedule_interval(self._update_container, 5)
         self.update_event.cancel()
         super(ContainerBlock, self).__init__(**kwargs)
 
 
-    def _update_container(self):
+    def _update_container(self, *args):
         """ This is a method for update
         container state. Dispatch docker client and
         get current state. If state not eql with saved
