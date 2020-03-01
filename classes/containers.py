@@ -48,8 +48,8 @@ class ContainerBlock(BaseBlock):
         docker_conn (DockerClient): Docker client.
     """
     image_path = ''
-    exited_icon = StringProperty('images/stop_container.png')
-    active_icon = StringProperty('images/play_container.png')
+    exited_icon = StringProperty('images/stop.png')
+    active_icon = StringProperty('images/play.png')
 
     def __init__(self, container, docker_conn, **kwargs):
         self.docker_conn = docker_conn

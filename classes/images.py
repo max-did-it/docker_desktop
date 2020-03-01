@@ -13,24 +13,11 @@ class ImagesLayout(DynamicColsGridLayout):
 
     def __init__(self, **kwargs):
         super(ImagesLayout, self).__init__(**kwargs)
-        images = DockerClient.conn.images.list()
-        for image in images:
-            if len(image.tags) > 0:
-                text = image.tags[0]
-                if not text.find('/') == -1:
-                    names_list = text.split('/')
-                    if len(names_list) > 2:
-                        image_name = names_list[-1]
-                    else:
-                        image_name = names_list[1]
-
-                    name, _ = image_name.split(':')
-                    text = name
-            else:
-                text = "Nobody"
-            container = ImageBlock(label_name=text)
-            self.add_widget(container)
-
+        docker = DockerClient.conn
+        images = docker.images.list()
+        for i in images:
+            img_wgt = ImageBlock(i, docker)
+            self.add_widget(img_wgt)
 
 class ImageBlock(BaseBlock):
     """This is a class for ui Docker Image enitity.
@@ -38,3 +25,23 @@ class ImageBlock(BaseBlock):
      name, tag, owner and others
     """
     image_path = StringProperty('images/image.png')
+    def __init__(self, image, docker_conn, **kwargs):
+        self.docker_conn = docker_conn
+        self.image = image
+        self.label_name = self.__prepare_name(image)
+        super(ImageBlock, self).__init__(**kwargs)
+
+    def __prepare_name(self, image):
+        """ This is a function for generate
+        block label, from tag or short_id
+
+        Arguments:
+            image (Image): image first tag
+
+        Returns:
+            name (string): image name
+        """
+        if len(image.tags) > 0:
+            return image.tags[0].split('/')[-1].split(':')[0]
+        else:
+            return image.short_id
