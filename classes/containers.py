@@ -4,7 +4,7 @@ from kivy.properties import NumericProperty, StringProperty
 from .base_blocks import BaseBlock
 from .docker_client import DockerClient
 from .dynamic_cols_grid_layout import DynamicColsGridLayout
-
+import time as Time
 
 class ContainersLayout(DynamicColsGridLayout):
     """ This is a base layout for ContainerBlock.
@@ -55,11 +55,10 @@ class ContainerBlock(BaseBlock):
         self.docker_conn = docker_conn
         self.container = container
         self.label_name = self.container.name
-        self.__set_image_path()
         self.update_event = Clock.schedule_interval(self._update_container, 5)
         self.update_event.cancel()
         super(ContainerBlock, self).__init__(**kwargs)
-
+        self.__set_image_path()
 
     def _update_container(self, *args):
         """ This is a method for update
@@ -71,15 +70,34 @@ class ContainerBlock(BaseBlock):
         if self.container.status != curr_cont.status:
             self.container = curr_cont
             self.__set_image_path()
-            image = self.ids.block_image
-            image.source = self.image_path
-            image.reload()
 
     def __set_image_path(self):
         """This is a method for select image by
         container status.
         """
+        if hasattr(self.ids, 'block_image'):
+            image = self.ids.block_image
+            if self.container.status != 'running':
+                image.source = self.exited_icon
+            else:
+                image.source = self.active_icon
+            image.reload()
+
+    def reset_image_path(self, *args):
+        """ This is a proxy-method to protected method for reset image 
+        by container status.
+        """
+        self.__set_image_path()
+
+    def on_image_click(self):
+        """ This is a method for trigger container
+        . Called when user
+        click on status image on container block.
+        Run or Stop container.
+        """
         if self.container.status != 'running':
-            self.image_path = self.exited_icon
+            self.container.start()
         else:
-            self.image_path = self.active_icon
+            self.container.stop()
+        self.ids.block_image.source = 'images/loading.gif'
+        Clock.schedule_once(self.reset_image_path, 5)
