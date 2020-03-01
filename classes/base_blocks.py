@@ -1,7 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ReferenceListProperty
-
-
+from kivy.uix.image import Image
+from kivy.uix.behaviors import ButtonBehavior
 class BaseBlock(BoxLayout):
     """This is a class for base ui Blocks
     Base settings do this class like rectangle block
@@ -24,3 +24,12 @@ class BaseBlock(BoxLayout):
             self.label_name = self.label_name[0:10] + '...'
         self.bg_color = (0.27, 0.27, 0.27, 1)
         super(BaseBlock, self).__init__(**kwargs)
+
+    def image_click_event(self, *args, **kwargs):
+        pass
+
+            
+class BaseBlockImage(ButtonBehavior, Image):
+    def on_press(self):
+        if hasattr(self.parent.parent, 'on_image_click'):
+            self.parent.parent.on_image_click()
